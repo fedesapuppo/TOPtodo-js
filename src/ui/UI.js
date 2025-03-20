@@ -27,12 +27,32 @@ export class UI {
         div.className = `project-item ${project.id === currentProjectId ? 'active' : ''}`;
         div.dataset.projectId = project.id;
 
-        div.innerHTML = `
+        const projectInfo = document.createElement('div');
+        projectInfo.className = 'project-info';
+        projectInfo.innerHTML = `
             <h3>${project.name}</h3>
             <span class="todo-count">${project.todos.length}</span>
         `;
 
-        div.addEventListener('click', () => {
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-project-btn';
+        deleteBtn.innerHTML = '×';
+        deleteBtn.title = 'Delete Project';
+
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent project selection when clicking delete
+            if (confirm('Are you sure you want to delete this project and all its todos?')) {
+                this.onProjectDelete(project.id);
+            }
+        });
+
+        div.appendChild(projectInfo);
+        // Don't add delete button to the default project
+        if (project.name !== 'My Tasks') {
+            div.appendChild(deleteBtn);
+        }
+
+        projectInfo.addEventListener('click', () => {
             this.onProjectSelect(project.id);
         });
 
@@ -138,4 +158,5 @@ export class UI {
     onTodoToggle(todoId) {}
     onChecklistItemToggle(todoId, index) {}
     onTodoDelete(todoId) {}
+    onProjectDelete(projectId) {}
 }

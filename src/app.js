@@ -41,6 +41,10 @@ export class TodoApp {
             project.removeTodo(todoId);
             this.saveAndRender();
         };
+
+        this.ui.onProjectDelete = (projectId) => {
+            this.deleteProject(projectId);
+        };
     }
 
     getCurrentProject() {
@@ -51,6 +55,28 @@ export class TodoApp {
         const project = new Project(name, description);
         this.projects.push(project);
         this.currentProjectId = project.id;
+        this.saveAndRender();
+    }
+
+    deleteProject(projectId) {
+        // Don't delete if it's the last project
+        if (this.projects.length <= 1) {
+            alert("Cannot delete the last project.");
+            return;
+        }
+
+        // Find the project index
+        const projectIndex = this.projects.findIndex(p => p.id === projectId);
+        if (projectIndex === -1) return;
+
+        // Remove the project
+        this.projects.splice(projectIndex, 1);
+
+        // If we deleted the current project, switch to another one
+        if (this.currentProjectId === projectId) {
+            this.currentProjectId = this.projects[0].id;
+        }
+
         this.saveAndRender();
     }
 
