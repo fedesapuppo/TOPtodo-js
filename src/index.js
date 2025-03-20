@@ -1,48 +1,58 @@
-import createHome from './home.js';
-import createMenu from './menu.js';
-import createContact from './contact.js';
 import './styles.css';
-
-function setActiveButton(button) {
-    const buttons = document.querySelectorAll('nav button');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-}
-
-function clearContent() {
-    const content = document.getElementById('content');
-    content.innerHTML = '';
-}
-
-function loadPage(pageFunction) {
-    clearContent();
-    const content = document.getElementById('content');
-    content.appendChild(pageFunction());
-}
+import { TodoApp } from './app';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Get all nav buttons
-    const homeBtn = document.querySelector('nav button:nth-child(1)');
-    const menuBtn = document.querySelector('nav button:nth-child(2)');
-    const contactBtn = document.querySelector('nav button:nth-child(3)');
+    // Initialize the application
+    const app = new TodoApp();
 
-    // Add click event listeners
-    homeBtn.addEventListener('click', (e) => {
-        setActiveButton(homeBtn);
-        loadPage(createHome);
+    // Handle new project form submission
+    const newProjectForm = document.getElementById('new-project-form');
+    const newProjectModal = document.getElementById('new-project-modal');
+    const newProjectBtn = document.getElementById('new-project-btn');
+    const cancelProjectBtn = document.getElementById('cancel-project');
+
+    newProjectBtn.addEventListener('click', () => {
+        newProjectModal.classList.add('active');
     });
 
-    menuBtn.addEventListener('click', (e) => {
-        setActiveButton(menuBtn);
-        loadPage(createMenu);
+    cancelProjectBtn.addEventListener('click', () => {
+        newProjectModal.classList.remove('active');
     });
 
-    contactBtn.addEventListener('click', (e) => {
-        setActiveButton(contactBtn);
-        loadPage(createContact);
+    newProjectForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('project-name').value;
+        const description = document.getElementById('project-description').value;
+
+        app.addProject(name, description);
+        newProjectModal.classList.remove('active');
+        newProjectForm.reset();
     });
 
-    // Load home page by default
-    loadPage(createHome);
-    setActiveButton(homeBtn);
+    // Handle new todo form submission
+    const newTodoForm = document.getElementById('new-todo-form');
+    const newTodoModal = document.getElementById('new-todo-modal');
+    const newTodoBtn = document.getElementById('new-todo-btn');
+    const cancelTodoBtn = document.getElementById('cancel-todo');
+
+    newTodoBtn.addEventListener('click', () => {
+        newTodoModal.classList.add('active');
+    });
+
+    cancelTodoBtn.addEventListener('click', () => {
+        newTodoModal.classList.remove('active');
+    });
+
+    newTodoForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = document.getElementById('todo-title').value;
+        const description = document.getElementById('todo-description').value;
+        const dueDate = document.getElementById('todo-due-date').value;
+        const priority = document.getElementById('todo-priority').value;
+        const notes = document.getElementById('todo-notes').value;
+
+        app.addTodo(title, description, dueDate, priority, notes);
+        newTodoModal.classList.remove('active');
+        newTodoForm.reset();
+    });
 });
