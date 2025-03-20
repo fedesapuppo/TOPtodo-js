@@ -20,9 +20,10 @@ export class TodoApp {
 
         this.ui.onTodoToggle = (todoId) => {
             const project = this.getCurrentProject();
-            const todo = project.getTodo(todoId);
-            if (todo) {
-                todo.toggleComplete();
+            const todoIndex = project.todos.findIndex(t => t.id === todoId);
+            if (todoIndex !== -1) {
+                // Toggle the completed status directly
+                project.todos[todoIndex].completed = !project.todos[todoIndex].completed;
                 this.saveAndRender();
             }
         };
@@ -30,8 +31,8 @@ export class TodoApp {
         this.ui.onChecklistItemToggle = (todoId, index) => {
             const project = this.getCurrentProject();
             const todo = project.getTodo(todoId);
-            if (todo) {
-                todo.toggleChecklistItem(index);
+            if (todo && todo.checklist[index]) {
+                todo.checklist[index].completed = !todo.checklist[index].completed;
                 this.saveAndRender();
             }
         };
@@ -44,6 +45,20 @@ export class TodoApp {
 
         this.ui.onProjectDelete = (projectId) => {
             this.deleteProject(projectId);
+        };
+
+        this.ui.onTodoEdit = (updatedTodo) => {
+            const project = this.getCurrentProject();
+            const todoIndex = project.todos.findIndex(t => t.id === updatedTodo.id);
+            if (todoIndex !== -1) {
+                // Preserve the checklist from the original todo
+                const originalChecklist = project.todos[todoIndex].checklist;
+                project.todos[todoIndex] = {
+                    ...updatedTodo,
+                    checklist: originalChecklist
+                };
+                this.saveAndRender();
+            }
         };
     }
 
