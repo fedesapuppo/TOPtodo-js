@@ -1,0 +1,32 @@
+{
+  "name": "topwebpack-restaurant-page",
+  "version": "1.0.0",
+  "description": "A restaurant homepage built using JavaScript and Webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack serve --config webpack.dev.js",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fedesapuppo/TOPwebpack-restaurant-page.git"
+  },
+  "author": "Federico Sapuppo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fedesapuppo/TOPwebpack-restaurant-page/issues"
+  },
+  "homepage": "https://github.com/fedesapuppo/TOPwebpack-restaurant-page#readme",
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0",
+    "webpack-merge": "^6.0.1"
+  }
+}
