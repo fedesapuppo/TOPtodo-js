@@ -1,5 +1,12 @@
 export class Todo {
-  constructor(title, description, dueDate, priority = 'medium', notes = '', checklist = []) {
+  constructor(
+    title,
+    description,
+    dueDate,
+    priority = "medium",
+    notes = "",
+    checklist = [],
+  ) {
     this.id = crypto.randomUUID();
     this.title = title;
     this.description = description;
@@ -16,7 +23,7 @@ export class Todo {
   }
 
   updatePriority(newPriority) {
-    if (['low', 'medium', 'high'].includes(newPriority)) {
+    if (["low", "medium", "high"].includes(newPriority)) {
       this.priority = newPriority;
     }
   }
@@ -41,7 +48,7 @@ export class Todo {
       notes: this.notes,
       checklist: this.checklist,
       completed: this.completed,
-      createdAt: this.createdAt
+      createdAt: this.createdAt,
     };
   }
 
@@ -52,7 +59,7 @@ export class Todo {
       new Date(json.dueDate),
       json.priority,
       json.notes,
-      json.checklist
+      json.checklist,
     );
     todo.id = json.id;
     todo.completed = json.completed;

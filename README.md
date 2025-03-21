@@ -24,17 +24,20 @@ A todo application built with JavaScript and Webpack. This application allows us
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/fedesapuppo/TOPtodo-js.git
 cd TOPtodo-js
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start the development server:
+
 ```bash
 npm start
 ```

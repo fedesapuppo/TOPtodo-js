@@ -1,7 +1,7 @@
-import { Todo } from './Todo';
+import { Todo } from "./Todo";
 
 export class Project {
-  constructor(name, description = '') {
+  constructor(name, description = "") {
     this.id = crypto.randomUUID();
     this.name = name;
     this.description = description;
@@ -14,11 +14,11 @@ export class Project {
   }
 
   removeTodo(todoId) {
-    this.todos = this.todos.filter(todo => todo.id !== todoId);
+    this.todos = this.todos.filter((todo) => todo.id !== todoId);
   }
 
   getTodo(todoId) {
-    return this.todos.find(todo => todo.id === todoId);
+    return this.todos.find((todo) => todo.id === todoId);
   }
 
   toJSON() {
@@ -26,8 +26,8 @@ export class Project {
       id: this.id,
       name: this.name,
       description: this.description,
-      todos: this.todos.map(todo => todo.toJSON()),
-      createdAt: this.createdAt
+      todos: this.todos.map((todo) => todo.toJSON()),
+      createdAt: this.createdAt,
     };
   }
 
@@ -35,7 +35,7 @@ export class Project {
     const project = new Project(json.name, json.description);
     project.id = json.id;
     project.createdAt = new Date(json.createdAt);
-    project.todos = json.todos.map(todoJson => Todo.fromJSON(todoJson));
+    project.todos = json.todos.map((todoJson) => Todo.fromJSON(todoJson));
     return project;
   }
 }

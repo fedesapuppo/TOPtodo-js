@@ -1,7 +1,7 @@
-import { Project } from './models/Project';
-import { Todo } from './models/Todo';
-import { StorageService } from './services/StorageService';
-import { UI } from './ui/UI';
+import { Project } from "./models/Project";
+import { Todo } from "./models/Todo";
+import { StorageService } from "./services/StorageService";
+import { UI } from "./ui/UI";
 
 export class TodoApp {
   constructor() {
@@ -20,10 +20,11 @@ export class TodoApp {
 
     this.ui.onTodoToggle = (todoId) => {
       const project = this.getCurrentProject();
-      const todoIndex = project.todos.findIndex(t => t.id === todoId);
+      const todoIndex = project.todos.findIndex((t) => t.id === todoId);
       if (todoIndex !== -1) {
         // Toggle the completed status directly
-        project.todos[todoIndex].completed = !project.todos[todoIndex].completed;
+        project.todos[todoIndex].completed =
+          !project.todos[todoIndex].completed;
         this.saveAndRender();
       }
     };
@@ -49,13 +50,13 @@ export class TodoApp {
 
     this.ui.onTodoEdit = (updatedTodo) => {
       const project = this.getCurrentProject();
-      const todoIndex = project.todos.findIndex(t => t.id === updatedTodo.id);
+      const todoIndex = project.todos.findIndex((t) => t.id === updatedTodo.id);
       if (todoIndex !== -1) {
         // Preserve the checklist from the original todo
         const originalChecklist = project.todos[todoIndex].checklist;
         project.todos[todoIndex] = {
           ...updatedTodo,
-          checklist: originalChecklist
+          checklist: originalChecklist,
         };
         this.saveAndRender();
       }
@@ -63,10 +64,12 @@ export class TodoApp {
   }
 
   getCurrentProject() {
-    return this.projects.find(project => project.id === this.currentProjectId);
+    return this.projects.find(
+      (project) => project.id === this.currentProjectId,
+    );
   }
 
-  addProject(name, description = '') {
+  addProject(name, description = "") {
     const project = new Project(name, description);
     this.projects.push(project);
     this.currentProjectId = project.id;
@@ -76,12 +79,12 @@ export class TodoApp {
   deleteProject(projectId) {
     // Don't delete if it's the last project
     if (this.projects.length <= 1) {
-      alert('Cannot delete the last project.');
+      alert("Cannot delete the last project.");
       return;
     }
 
     // Find the project index
-    const projectIndex = this.projects.findIndex(p => p.id === projectId);
+    const projectIndex = this.projects.findIndex((p) => p.id === projectId);
     if (projectIndex === -1) return;
 
     // Remove the project
@@ -95,10 +98,24 @@ export class TodoApp {
     this.saveAndRender();
   }
 
-  addTodo(title, description, dueDate, priority = 'medium', notes = '', checklist = []) {
+  addTodo(
+    title,
+    description,
+    dueDate,
+    priority = "medium",
+    notes = "",
+    checklist = [],
+  ) {
     const project = this.getCurrentProject();
     if (project) {
-      const todo = new Todo(title, description, dueDate, priority, notes, checklist);
+      const todo = new Todo(
+        title,
+        description,
+        dueDate,
+        priority,
+        notes,
+        checklist,
+      );
       project.addTodo(todo);
       this.saveAndRender();
     }

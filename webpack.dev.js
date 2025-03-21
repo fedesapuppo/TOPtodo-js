@@ -1,15 +1,15 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
-  mode: 'development',
-  devtool: 'eval-source-map',
+  mode: "development",
+  devtool: "eval-source-map",
   devServer: {
-    static: './dist',
+    static: "./dist",
     hot: true,
     open: true,
-    watchFiles: ['src/**/*'],
+    watchFiles: ["src/**/*"],
     port: 8080,
-    historyApiFallback: true
-  }
+    historyApiFallback: true,
+  },
 });
